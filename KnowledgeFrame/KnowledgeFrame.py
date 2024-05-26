@@ -5,13 +5,13 @@ class KnowledgeFrames:
         self.data = {}
     
     def __key_not_found(self, key):
-        raise KeyError(key)
+        return f'frame with name {key} not found'
 
     def add_entry(self, key, value : Frame):
         self.data[key] = value
 
     def get_entry(self,key):
-        return self.data.get(key, self.__key_not_found)
+        return self.data.get(key, self.__key_not_found())
     
     def delete_entry(self, key):
         if key in self.data:
