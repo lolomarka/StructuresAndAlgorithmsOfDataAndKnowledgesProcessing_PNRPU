@@ -1,4 +1,4 @@
-import Frame
+from Frame import Frame
 
 class KnowledgeFrames:
     def __init__(self):
@@ -25,4 +25,7 @@ class KnowledgeFrames:
     def search_entries(self, search_term):
         results = {key: value for key, value in self.data.items() if search_term.lower() in key.lower()}
         return results
+    
+    def __str__(self):
+        return str.join('\n', [frame.__str__() for frame in self.data.values()])
     

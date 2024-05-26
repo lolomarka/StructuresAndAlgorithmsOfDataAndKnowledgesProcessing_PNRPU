@@ -22,11 +22,18 @@ class Frame:
 
     def get_slot(self, slot_name : str):
         if slot_name in self.slots:
-            return self.slots(slot_name)
+            return self.slots[slot_name]
         elif self.parent_frame:
             return self.parent_frame.get_slot(slot_name)
         else:
             return self.__slot_name_not_found(slot_name)
 
     def __str__(self):
-        return f'{self.frame_name} : {self.slots}'
+        result = f'{self.frame_name} :\n'
+
+        if self.parent_frame:
+            for key, value in self.parent_frame.slots.items():
+                result += f'\t{key} : {value}\n'
+        for key, value in self.slots.items():
+            result += f'\t{key} : {value}\n'
+        return result
