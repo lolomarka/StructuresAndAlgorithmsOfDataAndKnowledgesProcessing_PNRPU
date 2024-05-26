@@ -8,6 +8,6 @@ setup(
     description='Небольшая библиотека для представления KnowledgeFrame',
     long_description=open('README.md').read(),
     url='https://github.com/lolomarka/StructuresAndAlgorithmsOfDataAndKnowledgesProcessing_PNRPU/tree/main/KnowledgeFrames',
-    packages=find_packages(where='KnowledgeFrames'),
+    packages=find_packages(),
     python_requires='>=3.6',
 )

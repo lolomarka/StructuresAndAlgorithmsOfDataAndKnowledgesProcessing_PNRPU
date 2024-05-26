@@ -1,5 +1,5 @@
-from KnowledgeFrames import Frame
-from KnowledgeFrames import knowledgeFrames
+from Knowledge_Frames import Frame
+from Knowledge_Frames import KnowledgeFrames
 
 def main():
     # базовый фрейм "Комнаты"
@@ -20,7 +20,7 @@ def main():
     living_room_frame.set_slot('Площадь, м^2', 35)
     living_room_frame.set_slot('Тип пола', 'Мраморная плитка')
 
-    knowledge_frames = knowledgeFrames()
+    knowledge_frames = KnowledgeFrames()
     knowledge_frames.add_entry(base_room_frame.frame_name, base_room_frame)
     knowledge_frames.add_entry(bedroom_frame.frame_name, bedroom_frame)
     knowledge_frames.add_entry(living_room_frame.frame_name, living_room_frame)
