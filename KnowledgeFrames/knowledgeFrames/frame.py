@@ -1,5 +1,4 @@
 class Frame:
-    
     def __init__(self, frame_name : str, parent_frame: 'Frame' = None):
         self.frame_name = frame_name
         self.slots = {}

@@ -1,5 +1,3 @@
-from Frame import Frame
-
 class KnowledgeFrames:
     def __init__(self):
         self.data = {}
@@ -7,7 +5,7 @@ class KnowledgeFrames:
     def __key_not_found(self, key):
         return f'frame with name {key} not found'
 
-    def add_entry(self, key, value : Frame):
+    def add_entry(self, key, value):
         self.data[key] = value
 
     def get_entry(self,key):
