@@ -1,6 +1,7 @@
 from Fact import Fact
 from Rule import Rule
 from KnowledgeBase import KnowledgeBase
+from utils import *
 
 class InferenceEngine(object):
     def fc_infer(self, fact : Fact, rule : Rule, knowledge_base : KnowledgeBase):
@@ -10,7 +11,7 @@ class InferenceEngine(object):
             return None
         
         if len(rule.left_hand_statements) == 1:
-            new_fact = Fact(instantite(rule.right_hand_statements, bindings), [[rule, fact]])
+            new_fact = Fact(instantiate(rule.right_hand_statements, bindings), [[rule, fact]])
             rule.supports_facts.append(new_fact)
             fact.supports_facts.append(new_fact)
             knowledge_base.kb_add(new_fact)
