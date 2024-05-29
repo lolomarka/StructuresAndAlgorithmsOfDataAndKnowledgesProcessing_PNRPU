@@ -1,4 +1,4 @@
-from Statement import Statement
+from .Statement import Statement
 
 class Fact(object):
     """Факт в базе знаний. Содержит утверждение, например человек - животное

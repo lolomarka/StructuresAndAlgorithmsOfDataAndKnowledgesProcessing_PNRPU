@@ -1,7 +1,4 @@
-from Binding import Binding
-from Variable import Variable
-from Constant import Constant
-from utils import is_var
+from .Binding import Binding
 
 class Bindings(object):
     def __init__(self):
@@ -21,14 +18,17 @@ class Bindings(object):
                 if (self.bindings_dict and key in self.bindings_dict)
                 else None)
     
-    def add_binding(self, variable : Variable, value : Constant):
+    def add_binding(self, variable, value):
         self.bindings_dict[variable.element] = value.element
         self.bindings.append(Binding(variable, value))
 
-    def bound_to(self, variable : Variable):
+    def bound_to(self, variable):
         if variable.element in self.bindings_dict.keys():
             value = self.bindings_dict[variable.element]
             if value:
+                from .utils import is_var
+                from .Constant import Constant
+                from .Variable import Variable
                 return Variable(value) if is_var(value) else Constant(value)
             
         return False

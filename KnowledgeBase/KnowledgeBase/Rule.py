@@ -1,4 +1,4 @@
-from Statement import Statement
+from .Statement import Statement
 
 class Rule(object):
     def __init__(self, rule, supported_by=[]):

@@ -1,4 +1,4 @@
-from Term import Term
+from .Term import Term
 
 class Statement(object):
     """Утверждение

@@ -1,15 +1,12 @@
-from Term import Term
-from Constant import Constant
-
-class Variable(object):
-    """Переменная, используемая в выражениях
+class Constant(object):
+    """Константа, используемая в выражении
     """
     def __init__(self, element):
-        super(Variable, self).__init__()
+        super(Constant, self).__init__()
         self.element = element
 
     def __repr__(self):
-        return 'Variable({!r})'.format(self.element)
+        return 'Constant({!r})'.format(self.element)
     
     def __str__(self):
         return str(self.element)

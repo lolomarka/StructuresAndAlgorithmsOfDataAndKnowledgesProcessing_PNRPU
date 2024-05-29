@@ -1,15 +1,13 @@
-from Term import Term
-from Variable import Variable
-from Statement import Statement
-from Bindings import Bindings
-from Fact import Fact
-
+from .Bindings import Bindings
 
 def is_var(var):
     """ Проверяет, является ли элемент переменной (или экземпляром Variable), 
     или термином (экземпляр Term)
     или строка, начинающаяся с '?', например '?d'. 
     """
+    from .Term import Term
+    from .Variable import Variable
+    
     if type(var) == str:
         return var[0] == '?'
     if isinstance(var, Term):
@@ -17,7 +15,7 @@ def is_var(var):
     
     return isinstance(var, Variable)
 
-def match_recursive(terms1, terms2, bindings : Bindings):
+def match_recursive(terms1, terms2, bindings):
     """
     Вспомогательный рекурсивный метод для сопоставления (метод match)
     """
@@ -25,7 +23,7 @@ def match_recursive(terms1, terms2, bindings : Bindings):
     if len(terms1) == 0:
         return bindings
     if is_var(terms1[0]):
-        if not bindings.test_and_bind(terms1[0], terms2[0]):
+        if not bindings.test_and_bind(variable_term=terms1[0], value_term=terms2[0]):
             return False
     elif is_var(terms2[0]):
         if not bindings.test_and_bind(terms2[0], terms1[0]):
@@ -34,20 +32,22 @@ def match_recursive(terms1, terms2, bindings : Bindings):
         return False
     return match_recursive(terms1[1:], terms2[1:], bindings)
 
-def match(state1 : Statement, state2 : Statement, bindings=None):
+def match(state1, state2, bindings=None):
     """ Сопоставляет два высказывания и возвращает связанные с ним binding-и.
     """
     if len(state1.terms) != len(state2.terms) or state1.predicate != state2.predicate:
         return False
     if not bindings:
-        bindings = Bindings
+        bindings = Bindings()
     return match_recursive(state1.terms, state2.terms, bindings)
 
-def instantiate(statement : Statement, bindings : Bindings):
+def instantiate(statement, bindings):
     """Генерирует утверждение из переданных утверждений и binding-ов.
     """
-
-    def handle_term(term : Term):
+    from .Term import Term
+    from .Statement import Statement
+    
+    def handle_term(term):
         if is_var(term):
             binded_value = bindings.bound_to(term.term)
             return Term(binded_value) if binded_value else term
@@ -59,6 +59,7 @@ def instantiate(statement : Statement, bindings : Bindings):
 
 def factq(element):
     """Проверяет, что переданный элемент - факт"""
+    from .Fact import Fact
     return isinstance(element, Fact)
 
 def print_verbose(message, level, verbose, data=[]):

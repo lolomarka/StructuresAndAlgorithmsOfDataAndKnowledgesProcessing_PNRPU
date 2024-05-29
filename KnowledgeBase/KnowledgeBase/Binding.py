@@ -1,8 +1,5 @@
-from Variable import Variable
-from Constant import Constant
-
 class Binding(object):
-    def __init__(self, variable : Variable, constant : Constant):
+    def __init__(self, variable, constant):
         super(Binding, self).__init__()
         self.variable = variable
         self.constant = constant

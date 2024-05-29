@@ -1,8 +1,6 @@
-from InferenceEngine import InferenceEngine
-from Fact import Fact
-from Rule import Rule
-from BindingsList import BindingsList
-from utils import *
+from .Rule import Rule
+from .Fact import Fact
+from .utils import *
 
 #FOR DEBUG
 verbose = 0
@@ -11,6 +9,8 @@ class KnowledgeBase(object):
     def __init__(self, facts=[], rules=[]):
         self.facts = facts
         self.rules = rules
+        
+        from .InferenceEngine import InferenceEngine
         self.infer_engine = InferenceEngine()
 
     def __repr__(self):
@@ -69,10 +69,12 @@ class KnowledgeBase(object):
         print_verbose('Asserting {!r}', 0, verbose, [fact_or_rule])
         self.add_to_knowledge_base(fact_or_rule)
 
-    def ask_knowledge_base(self, fact : Fact):
+    def ask_knowledge_base(self, fact):
         print_verbose('Asking {!r}', 0, verbose, [fact])
         if factq(fact):
             f = Fact(fact.statement)
+            
+            from .BindingsList import BindingsList  
             binding_list = BindingsList()
 
             for fact in self.facts:

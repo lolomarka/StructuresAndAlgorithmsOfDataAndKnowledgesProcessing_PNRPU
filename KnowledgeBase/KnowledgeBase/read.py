@@ -1,6 +1,6 @@
-from Fact import Fact
-from Rule import Rule
-from utils import print_verbose
+from .Fact import Fact
+from .Rule import Rule
+from .utils import print_verbose
 
 verbose = 0
 

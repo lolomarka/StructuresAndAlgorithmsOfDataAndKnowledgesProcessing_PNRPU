@@ -1,6 +1,6 @@
-from Constant import Constant
-from Variable import Variable
-from utils import is_var
+from .Constant import Constant
+from .Variable import Variable
+from .utils import is_var
 
 class Term(object):
     """Термин (константа или переменная)
