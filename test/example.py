@@ -19,6 +19,12 @@ class KnowledgeBaseTest(unittest.TestCase):
         print('Вопрос: ', ask1)
         answer = self.knowledge_base.ask_knowledge_base(ask1)
         print(answer)
+        
+    def test2(self):
+        ask2 = parse_input('fact: (это пирамида2 ?X)')
+        print('Вопрос: ', ask2)
+        answer = self.knowledge_base.ask_knowledge_base(ask2)
+        print(answer)
 
 if __name__ == '__main__':
     unittest.main()

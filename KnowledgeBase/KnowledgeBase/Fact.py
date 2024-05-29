@@ -30,7 +30,7 @@ class Fact(object):
             supports_fact_str = str.join(', ', name_strings)
             string += f'\t Supports facts: [{supports_fact_str}]\n'
         if any(self.supports_rules):
-            name_strings = [str(x.Name) for x in self.supports_rules]
+            name_strings = [str(x.name) for x in self.supports_rules]
             supports_rules_str = str.join(', ', name_strings)
             string += f'\t Supports rules: [{supports_rules_str}]\n'
         return string
