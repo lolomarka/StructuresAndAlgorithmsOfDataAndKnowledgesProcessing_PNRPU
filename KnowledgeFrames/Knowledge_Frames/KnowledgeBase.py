@@ -85,6 +85,52 @@ class KnowledgeBase(object):
             print('Invalid ask: ', fact.statement)
             return []
         
+    def retract_from_knowledge_base(self, fact_or_rule):
+        print_verbose('Retracting {!r}', 0, verbose, [fact_or_rule])
+
+        if len(fact_or_rule.supported_by) != 0:
+            return None
         
+        if isinstance(fact_or_rule, Rule):
+            if fact_or_rule in self.rules and len(fact_or_rule.supported_by) == 0:
+                self.rules.remove(fact_or_rule)
+
+        if isinstance(fact_or_rule, Fact):
+            flag = False
+            for x in self.facts:
+                if fact_or_rule.statement == x.statement:
+                    fact_or_rule = x
+                    flag = True
+                    break
+
+                if not flag:
+                    return None
+                
+                if len(fact_or_rule.supported_by) == 0:
+                    self.facts.remove(fact_or_rule)
+
+        # Ищем все поддерживаемые факты
+        for temp in fact_or_rule.supports_facts:
+            temp_len = 0
+            standard = len(temp.supported_by)
+            for x in temp.supported_by:
+                if fact_or_rule in x:
+                    temp.supported_by.remove(x)
+                    temp_len += 1
+
+                if standard == temp_len:
+                    self.retract_from_knowledge_base(temp)
+
+        # Ищем все поддерживаемые правила
+        for temp in fact_or_rule.supports_rules:
+            temp_len = 0
+            standard = len(temp.supported_by)
+            for y in temp.supported_by:
+                if fact_or_rule in y:
+                    temp.supported_by.remove(y)
+                    temp_len += 1
+            
+            if standard == temp_len:
+                self.retract_from_knowledge_base(temp)
         
 
