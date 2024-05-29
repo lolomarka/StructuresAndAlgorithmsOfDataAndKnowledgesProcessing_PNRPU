@@ -7,3 +7,4 @@ from .Constant import Constant
 from .Variable import Variable
 from .Statement import Statement
 from .Term import Term
+from .read import read
