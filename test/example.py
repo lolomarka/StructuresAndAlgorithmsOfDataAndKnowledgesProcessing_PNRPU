@@ -18,13 +18,37 @@ class KnowledgeBaseTest(unittest.TestCase):
         ask1 = parse_input('fact: (цвет пирамида2 ?X)')
         print('Вопрос: ', ask1)
         answer = self.knowledge_base.ask_knowledge_base(ask1)
-        print(answer)
+        pprint_justification(answer)
         
     def test2(self):
         ask2 = parse_input('fact: (это пирамида2 ?X)')
         print('Вопрос: ', ask2)
         answer = self.knowledge_base.ask_knowledge_base(ask2)
-        print(answer)
+        pprint_justification(answer)
+        
+def pprint_justification(answer):
+    if not answer: print('Ответ - нет, нет обоснований')
+    else:
+        print('\nОбоснования:')
+        for i in range(0,len(answer.bindings_list)):
+            print(answer.bindings_list[i][0])
+            for fact_rule in answer.bindings_list[i][1]:
+                pprint_support(fact_rule,0)
+                print
+
+def pprint_support(fact_rule, indent):
+    if fact_rule:
+        print(' '*indent, "Исходя из")
+        if isinstance(fact_rule, Fact):
+            print(fact_rule.statement)
+        else:
+            print(fact_rule.left_hand_statements, "->", fact_rule.right_hand_statements)
+
+        if fact_rule.supported_by:
+            for pair in fact_rule.supported_by:
+                print(' '*(indent+1), "Одно из подтверждений")
+                for next in pair:
+                    pprint_support(next, indent+2)
 
 if __name__ == '__main__':
     unittest.main()
