@@ -1,6 +1,5 @@
+""" Константа, используемая в выражении. """
 class Constant(object):
-    """Константа, используемая в выражении
-    """
     def __init__(self, element):
         super(Constant, self).__init__()
         self.element = element

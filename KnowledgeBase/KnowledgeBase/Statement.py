@@ -1,8 +1,7 @@
 from .Term import Term
 
+"""Утверждение"""
 class Statement(object):
-    """Утверждение
-    """
     def __init__(self, statement_list=[]):
         super(Statement, self).__init__()
         self.terms = []
@@ -20,12 +19,10 @@ class Statement(object):
     def __eq__(self, other):
         if self.predicate != other.predicate:
             return False
-        
         for self_term, other_term in zip(self.terms, other.terms):
             if self_term != other_term:
                 return False
-        
         return True
     
     def __ne__(self, other):
-        return not self == other
+        return self != other

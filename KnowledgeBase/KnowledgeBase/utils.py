@@ -1,9 +1,9 @@
 from .Bindings import Bindings
 
 def is_var(var):
-    """ Проверяет, является ли элемент переменной (или экземпляром Variable), 
+    """Проверяет, является ли элемент переменной (или экземпляром Variable),
     или термином (экземпляр Term)
-    или строка, начинающаяся с '?', например '?d'. 
+    или строка, начинающаяся с '?', например '?d'.
     """
     from .Term import Term
     from .Variable import Variable
@@ -12,8 +12,8 @@ def is_var(var):
         return var[0] == '?'
     if isinstance(var, Term):
         return isinstance(var.term, Variable)
-    
     return isinstance(var, Variable)
+
 
 def match_recursive(terms1, terms2, bindings):
     """
@@ -33,29 +33,29 @@ def match_recursive(terms1, terms2, bindings):
     return match_recursive(terms1[1:], terms2[1:], bindings)
 
 def match(state1, state2, bindings=None):
-    """ Сопоставляет два высказывания и возвращает связанные с ним binding-и.
-    """
+    """Сопоставляет два высказывания и возвращает связанные с ним binding-и."""
     if len(state1.terms) != len(state2.terms) or state1.predicate != state2.predicate:
         return False
     if not bindings:
         bindings = Bindings()
     return match_recursive(state1.terms, state2.terms, bindings)
 
+
 def instantiate(statement, bindings):
-    """Генерирует утверждение из переданных утверждений и binding-ов.
-    """
-    from .Term import Term
+    """Генерирует утверждение из переданных утверждений и binding-ов."""
     from .Statement import Statement
-    
+
+    from .Term import Term
+
     def handle_term(term):
         if is_var(term):
             binded_value = bindings.bound_to(term.term)
             return Term(binded_value) if binded_value else term
-        else:
-            return term
-        
+        return term
+
     new_terms = [handle_term(term) for term in statement.terms]
     return Statement([statement.predicate] + new_terms)
+
 
 def factq(element):
     """Проверяет, что переданный элемент - факт"""

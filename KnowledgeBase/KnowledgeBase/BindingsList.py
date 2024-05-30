@@ -1,3 +1,4 @@
+""" Контейнер для нескольких Bindings."""
 class BindingsList(object):
     def __init__(self):
         super(BindingsList, self).__init__()
@@ -20,4 +21,4 @@ class BindingsList(object):
         return self.bindings_list[key][0]
 
     def add_bindings(self, bindings, facts_rules=[]):
-        self.bindings_list.append((bindings, facts_rules)) 
+        self.bindings_list.append((bindings, facts_rules))

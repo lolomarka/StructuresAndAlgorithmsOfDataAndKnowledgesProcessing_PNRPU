@@ -1,9 +1,10 @@
 from .Statement import Statement
 
+""" Факт в базе знаний.
+    Содержит утверждение, например человек - животное и поля, для отслеживания,
+    какие факты/правила в БЗ этот факт подтверждают, или их подтверждает этот факт.
+"""
 class Fact(object):
-    """Факт в базе знаний. Содержит утверждение, например человек - животное
-    и поля, для отслеживания, какие факты/правила в БЗ этот факт подтверждают, или подтверждает этот факт.
-    """
     def __init__(self, statement, supported_by=[]):
         super(Fact, self).__init__()
         self.name = 'fact'
@@ -15,8 +16,14 @@ class Fact(object):
 
     def __repr__(self):
         return 'Fact({!r}, {!r}, {!r}, {!r}, {!r}, {!r})'.format(
-            self.name, self.statement, self.asserted, self.supported_by, self.supports_facts, self.supports_rules)
-    
+            self.name,
+            self.statement,
+            self.asserted,
+            self.supported_by,
+            self.supports_facts,
+            self.supports_rules,
+        )
+
     def __str__(self):
         string = self.name + ":\n"
         string += f'\t{str(self.statement)}\n'
@@ -34,9 +41,9 @@ class Fact(object):
             supports_rules_str = str.join(', ', name_strings)
             string += f'\t Supports rules: [{supports_rules_str}]\n'
         return string
-    
+
     def __eq__(self, other):
         return isinstance(other, Fact) and self.statement == other.statement
-    
+
     def __ne__(self, other):
-        return not self == other
+        return self != other
