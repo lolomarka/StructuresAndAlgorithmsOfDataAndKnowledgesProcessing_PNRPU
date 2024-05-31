@@ -2,18 +2,14 @@ from .Constant import Constant
 from .Variable import Variable
 from .utils import is_var
 
-""" Термин (константа или переменная)."""
-class Term(object):
+"""Термин (константа или переменная)."""
+class Term:
     def __init__(self, term):
         """
-        Конструктор термина - приводит к требуемой форме
+        Конструктор термина - приводит к требуемой форме.
         """
-        super(Term, self).__init__()
-        is_var_or_const = isinstance(term, Variable) or isinstance(term, Constant)
-        self.term = (
-            term if is_var_or_const else (Variable(term) if is_var(term) else Constant(term))
-
-        )
+        is_var_or_const = isinstance(term, (Variable, Constant))
+        self.term = term if is_var_or_const else (Variable(term) if is_var(term) else Constant(term))
 
     def __repr__(self):
         return 'Term({!r})'.format(self.term)
@@ -27,10 +23,10 @@ class Term(object):
             or isinstance(other, Term)
             and self.term.element == other.term.element
             or (
-                (isinstance(other, Variable) or isinstance(other, Constant))
+                isinstance(other, (Variable, Constant))
                 and self.term.element == other.element
-    
-        ))
+            )
+        )
 
     def __ne__(self, other):
-        return self != other
+        return not self.__eq__(other)

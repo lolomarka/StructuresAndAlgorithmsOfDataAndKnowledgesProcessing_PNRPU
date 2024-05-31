@@ -1,17 +1,19 @@
-""" Контейнер для нескольких Bindings."""
-class BindingsList(object):
+"""Контейнер для нескольких Bindings."""
+class BindingsList:
     def __init__(self):
-        super(BindingsList, self).__init__()
+        super().__init__()
         self.bindings_list = []
 
     def __repr__(self):
         return 'BindingsList({!r})'.format(self.bindings_list)
-    
+
     def __str__(self):
         string = ''
         for binding, associated_fact_rules in self.bindings_list:
             string += f'Bindings for Facts and Rules: {str(binding)}\n'
-            string += f'Associated Facts and Rules: [{str.join(', ', (str(f) for f in associated_fact_rules))}]'
+            string += 'Associated Facts and Rules: [{}]'.format(
+                ', '.join(str(f) for f in associated_fact_rules)
+            )
         return string
 
     def __len__(self):

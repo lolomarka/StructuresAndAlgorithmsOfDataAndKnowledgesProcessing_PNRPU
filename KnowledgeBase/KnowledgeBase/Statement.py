@@ -1,9 +1,10 @@
 from .Term import Term
 
 """Утверждение"""
-class Statement(object):
-    def __init__(self, statement_list=[]):
-        super(Statement, self).__init__()
+class Statement:
+    def __init__(self, statement_list=None):
+        if statement_list is None:
+            statement_list = []
         self.terms = []
         self.predicate = ''
         if statement_list:
@@ -14,15 +15,14 @@ class Statement(object):
         return 'Statement({!r}, {!r})'.format(self.predicate, self.terms)
 
     def __str__(self):
-        return f'({self.predicate} {str.join(' ', (str(t) for t in self.terms))})'
+        return f'({self.predicate} {" ".join(str(t) for t in self.terms)})'
     
     def __eq__(self, other):
+        if not isinstance(other, Statement):
+            return False
         if self.predicate != other.predicate:
             return False
-        for self_term, other_term in zip(self.terms, other.terms):
-            if self_term != other_term:
-                return False
-        return True
+        return all(self_term == other_term for self_term, other_term in zip(self.terms, other.terms))
     
     def __ne__(self, other):
-        return self != other
+        return not self.__eq__(other)

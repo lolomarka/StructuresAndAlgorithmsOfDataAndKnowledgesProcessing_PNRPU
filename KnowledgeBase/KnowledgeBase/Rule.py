@@ -1,9 +1,10 @@
 from .Statement import Statement
 
-""" Правило в БЗ. """
-class Rule(object):
-    def __init__(self, rule, supported_by=[]):
-        super(Rule, self).__init__()
+"""Правило в БЗ."""
+class Rule:
+    def __init__(self, rule, supported_by=None):
+        if supported_by is None:
+            supported_by = []
         self.name = rule
         self.left_hand_statements = [
             statement if isinstance(statement, Statement) else Statement(statement)
@@ -18,35 +19,37 @@ class Rule(object):
         self.supports_rules = []
 
     def __repr__(self):
-        return 'Rule({!r}, {!r}, {!r}, {!r}, {!r}, {!r}, {!r})'.format(
-            self.name,
-            self.left_hand_statements,
-            self.right_hand_statements,
-            self.asserted,
-            self.supported_by,
-            self.supports_facts,
-            self.supports_rules,
+        return (
+            'Rule({!r}, {!r}, {!r}, {!r}, {!r}, {!r}, {!r})'.format(
+                self.name,
+                self.left_hand_statements,
+                self.right_hand_statements,
+                self.asserted,
+                self.supported_by,
+                self.supports_facts,
+                self.supports_rules,
+            )
         )
 
     def __str__(self):
         string = f'{self.name}:\n'
-        string += f'\t Left hand:\n'
+        string += '\t Left hand:\n'
         for statement in self.left_hand_statements:
             string += f'\t\t{str(statement)}\n'
         string += f'\t Right hand:\n\t\t{str(self.right_hand_statements)}\n'
         string += f'\t Asserted: {self.asserted}\n'
 
-        if any(self.supported_by):
+        if self.supported_by:
             name_strings = [str(x.name) for y in self.supported_by for x in y]
-            supported_by_str = str.join(', ', name_strings)
+            supported_by_str = ', '.join(name_strings)
             string += f'\t Supported by: [{supported_by_str}]\n'
-        if any(self.supports_facts):
+        if self.supports_facts:
             name_strings = [str(x.name) for x in self.supports_facts]
-            supports_fact_str = str.join(', ', name_strings)
-            string += f'\t Supports facts: [{supports_fact_str}]\n'
-        if any(self.supports_rules):
-            name_strings = [str(x.Name) for x in self.supports_rules]
-            supports_rules_str = str.join(', ', name_strings)
+            supports_facts_str = ', '.join(name_strings)
+            string += f'\t Supports facts: [{supports_facts_str}]\n'
+        if self.supports_rules:
+            name_strings = [str(x.name) for x in self.supports_rules]
+            supports_rules_str = ', '.join(name_strings)
             string += f'\t Supports rules: [{supports_rules_str}]\n'
         return string
 
@@ -58,4 +61,4 @@ class Rule(object):
         )
 
     def __ne__(self, other):
-        return self != other
+        return not self.__eq__(other)

@@ -1,12 +1,10 @@
-"""Переменная, используемая в выражениях"""
-class Variable(object):
-
+"""Переменная, используемая в выражениях."""
+class Variable:
     def __init__(self, element):
-        super(Variable, self).__init__()
         self.element = element
 
     def __repr__(self):
-        return 'Variable({!r})'.format(self.element)
+        return f'Variable({self.element!r})'
 
     def __str__(self):
         return str(self.element)
@@ -15,11 +13,11 @@ class Variable(object):
         return (
             self is other
             or (isinstance(other, Term) and self.term.element == other.term.element)
-            or ((
+            or (
                 (isinstance(other, Variable) or isinstance(other, Constant))
                 and self.term.element == other.element
-        )))
-
+            )
+        )
 
     def __ne__(self, other):
-        return self != other
+        return not self == other

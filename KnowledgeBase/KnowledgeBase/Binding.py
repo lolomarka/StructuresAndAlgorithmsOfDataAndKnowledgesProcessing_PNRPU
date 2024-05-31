@@ -1,7 +1,7 @@
-""" Привязка переменной к константе. """
-class Binding(object):
+"""Привязка переменной к константе."""
+class Binding:
     def __init__(self, variable, constant):
-        super(Binding, self).__init__()
+        super().__init__()
         self.variable = variable
         self.constant = constant
 
