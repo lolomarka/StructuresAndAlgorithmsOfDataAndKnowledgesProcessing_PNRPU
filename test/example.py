@@ -18,14 +18,23 @@ class KnowledgeBaseTest(unittest.TestCase):
         ask1 = parse_input('fact: (цвет пирамида2 ?X)')
         print('Вопрос: ', ask1)
         answer = self.knowledge_base.ask_knowledge_base(ask1)
+        self.assertEqual(str(answer[0]), '?X : оранжевый')
         pprint_justification(answer)
         
     def test2(self):
         ask2 = parse_input('fact: (это пирамида2 ?X)')
         print('Вопрос: ', ask2)
         answer = self.knowledge_base.ask_knowledge_base(ask2)
+        self.assertEqual(str(answer[0]), '?X : пирамида')
         pprint_justification(answer)
         
+    def test3(self):
+        ask3 = parse_input('fact: (является пирамида3 куб)')
+        print ('Вопрос: ', ask3)
+        answer = self.knowledge_base.ask_knowledge_base(ask3)
+        self.assertEqual(answer, [])
+        pprint_justification(answer)
+            
 def pprint_justification(answer):
     if not answer: print('Ответ - нет, нет обоснований')
     else:
@@ -52,8 +61,6 @@ def pprint_support(fact_rule, indent):
 
 if __name__ == '__main__':
     unittest.main()
-
-# Вывод (не красиво, но работает)
 
 # Вопрос:  fact:
 #         (цвет пирамида2 ?X)
@@ -86,8 +93,13 @@ if __name__ == '__main__':
 # (это пирамида2 пирамида)
 #    следует что
 # (является пирамида блок)
+# .Вопрос:  fact:
+#         (является пирамида3 куб)
+#          Asserted: True
+
+# Ответ - нет, нет обоснований
 # .
 # ----------------------------------------------------------------------
-# Ran 2 tests in 0.005s
+# Ran 3 tests in 0.007s
 
 # OK
